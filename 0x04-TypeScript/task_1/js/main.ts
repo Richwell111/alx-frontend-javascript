@@ -1,31 +1,54 @@
 // Teacher interface
 export interface Teacher {
-  firstName: string;
-  lastName: string;
+  readonly firstName: string;
+  readonly lastName: string;
   fullTimeEmployee: boolean;
   yearsOfExperience?: number;
   location: string;
-  [key: string]: any; // allows additional attributes
+  [propName: string]: any;
 }
 
-// Director interface extending Teacher
-export interface Director extends Teacher {
+// Directors interface extending Teacher
+export interface Directors extends Teacher {
   numberOfReports: number;
 }
 
-// Example usage
-const teacher: Teacher = {
-  firstName: "John",
-  lastName: "Doe",
-  fullTimeEmployee: true,
-  location: "London",
-  contract: false,
+// printTeacher function + interface
+export interface printTeacherFunction {
+  (firstName: string, lastName: string): string;
+}
+
+export const printTeacher: printTeacherFunction = (firstName, lastName) => {
+  return `${firstName.charAt(0)}. ${lastName}`;
 };
 
-const director: Director = {
-  firstName: "Jane",
-  lastName: "Smith",
-  fullTimeEmployee: true,
-  location: "New York",
-  numberOfReports: 17,
-};
+// ---------- StudentClass Part ----------
+
+// Interface describing the constructor
+export interface StudentClassConstructor {
+  new (firstName: string, lastName: string): StudentClassInterface;
+}
+
+// Interface describing the class itself
+export interface StudentClassInterface {
+  workOnHomework(): string;
+  displayName(): string;
+}
+
+// Class implementation
+export class StudentClass implements StudentClassInterface {
+  constructor(public firstName: string, public lastName: string) {}
+
+  workOnHomework(): string {
+    return "Currently working";
+  }
+
+  displayName(): string {
+    return this.firstName;
+  }
+}
+
+// Example usage
+const student = new StudentClass("Richwell", "Antwi");
+console.log(student.workOnHomework()); // Currently working
+console.log(student.displayName());    // Richwell
