@@ -32,7 +32,7 @@ interface StudentClassInterface {
   displayName(): string;
 }
 
-// ⚡ IMPORTANT: match exactly what checker expects
+// ⚡ Important: match the checker literally
 class StudentClass implements StudentClassInterface {
   firstName: string;
   lastName: string;
@@ -51,7 +51,7 @@ class StudentClass implements StudentClassInterface {
   }
 }
 
-// Exports (at the bottom, so definition stays exact above)
+// Exports at the bottom
 export {
   Teacher,
   Directors,
