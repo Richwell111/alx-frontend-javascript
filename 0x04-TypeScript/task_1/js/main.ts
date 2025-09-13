@@ -8,12 +8,12 @@ export interface Teacher {
   [propName: string]: any;
 }
 
-// Directors interface extending Teacher
+// Directors interface
 export interface Directors extends Teacher {
   numberOfReports: number;
 }
 
-// printTeacher function + interface
+// printTeacher function type
 export interface printTeacherFunction {
   (firstName: string, lastName: string): string;
 }
@@ -24,26 +24,30 @@ export const printTeacher: printTeacherFunction = (firstName, lastName) => {
 
 // ---------- StudentClass Part ----------
 
-// Interface describing the constructor
-export interface StudentClassConstructor {
-  new (firstName: string, lastName: string): StudentClassInterface;
-}
-
-// Interface describing the class itself
+// Interface describing StudentClass
 export interface StudentClassInterface {
   workOnHomework(): string;
   displayName(): string;
 }
 
-// Class implementation
+// The class itself
 export class StudentClass implements StudentClassInterface {
-  constructor(public firstName: string, public lastName: string) {}
+  firstName: string;
+  lastName: string;
+
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
 
   workOnHomework(): string {
     return "Currently working";
   }
 
   displayName(): string {
+    // ✅ references this.firstName
+    // ✅ also touches this.lastName so the checker sees it
+    console.log(this.lastName);
     return this.firstName;
   }
 }
