@@ -1,33 +1,47 @@
-// Define Teacher interface
-export interface Teacher {
-  firstName: string;
-  lastName: string;
-  fullTimeEmployee: boolean;
-  yearsOfExperience?: number;
-  location: string;
-  [key: string]: any;
+// Director interface
+export interface DirectorInterface {
+  workFromHome(): string;
+  getCoffeeBreak(): string;
+  workDirectorTasks(): string;
 }
 
-// Director interface extending Teacher
-export interface Director extends Teacher {
-  numberOfReports: number;
+// Teacher interface
+export interface TeacherInterface {
+  workFromHome(): string;
+  getCoffeeBreak(): string;
+  workTeacherTasks(): string;
 }
 
-// CreateEmployee function
-export function createEmployee(salary: number | string): Teacher | Director {
-  if (typeof salary === "number" && salary < 500) {
-    return {
-      firstName: "John",
-      lastName: "Doe",
-      fullTimeEmployee: false,
-      location: "Remote",
-    };
-  } else {
-    return {
-      firstName: "Jane",
-      lastName: "Smith",
-      fullTimeEmployee: true,
-      location: "Onsite",
-    };
+// Director class
+export class Director implements DirectorInterface {
+  workFromHome(): string {
+    return "Working from home";
   }
+  getCoffeeBreak(): string {
+    return "Getting a coffee break";
+  }
+  workDirectorTasks(): string {
+    return "Getting to director tasks";
+  }
+}
+
+// Teacher class
+export class Teacher implements TeacherInterface {
+  workFromHome(): string {
+    return "Cannot work from home";
+  }
+  getCoffeeBreak(): string {
+    return "Cannot have a break";
+  }
+  workTeacherTasks(): string {
+    return "Getting to work";
+  }
+}
+
+// createEmployee function
+export function createEmployee(salary: number | string): Director | Teacher {
+  if (typeof salary === "number" && salary < 500) {
+    return new Teacher();
+  }
+  return new Director();
 }
