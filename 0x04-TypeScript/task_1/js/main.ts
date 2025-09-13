@@ -1,37 +1,50 @@
-// Teacher interface
-export interface Teacher {
+// 1. Teacher interface
+interface Teacher {
   readonly firstName: string;
   readonly lastName: string;
   fullTimeEmployee: boolean;
   yearsOfExperience?: number;
   location: string;
-  [propName: string]: any;
+  [key: string]: any;
 }
 
-// Directors interface
-export interface Directors extends Teacher {
+// 2. Directors interface extending Teacher
+interface Directors extends Teacher {
   numberOfReports: number;
 }
 
-// printTeacher function type
-export interface printTeacherFunction {
+// Example director
+const director1: Directors = {
+  firstName: 'John',
+  lastName: 'Doe',
+  location: 'London',
+  fullTimeEmployee: true,
+  numberOfReports: 17,
+};
+console.log(director1);
+
+// 3. printTeacher function + interface
+interface printTeacherFunction {
   (firstName: string, lastName: string): string;
 }
 
-export const printTeacher: printTeacherFunction = (firstName, lastName) => {
+const printTeacher: printTeacherFunction = (firstName, lastName) => {
   return `${firstName.charAt(0)}. ${lastName}`;
 };
 
-// ---------- StudentClass Part ----------
+console.log(printTeacher("John", "Doe")); // J. Doe
 
-// Interface describing StudentClass
-export interface StudentClassInterface {
+// 4. StudentClass with interfaces
+interface StudentConstructor {
+  new (firstName: string, lastName: string): StudentClass;
+}
+
+interface StudentClassInterface {
   workOnHomework(): string;
   displayName(): string;
 }
 
-// The class itself
-export class StudentClass implements StudentClassInterface {
+class StudentClass implements StudentClassInterface {
   firstName: string;
   lastName: string;
 
@@ -45,14 +58,21 @@ export class StudentClass implements StudentClassInterface {
   }
 
   displayName(): string {
-    // ✅ references this.firstName
-    // ✅ also touches this.lastName so the checker sees it
-    console.log(this.lastName);
     return this.firstName;
   }
 }
 
 // Example usage
-const student = new StudentClass("Richwell", "Antwi");
+const student = new StudentClass("Alice", "Smith");
+console.log(student.displayName()); // Alice
 console.log(student.workOnHomework()); // Currently working
-console.log(student.displayName());    // Richwell
+
+export {
+  Teacher,
+  Directors,
+  printTeacherFunction,
+  printTeacher,
+  StudentConstructor,
+  StudentClassInterface,
+  StudentClass,
+};
